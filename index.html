@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Kills Devs</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div id="game-container">
+        <!-- Crosshair/Gun follows mouse -->
+        <div id="cursor-gun"></div>
+        <div id="crosshair"></div>
+
+        <!-- Game World -->
+        <div id="world">
+            <!-- Developers will assume positions here -->
+        </div>
+
+        <!-- HUD -->
+        <div id="hud">
+            <div class="hud-item">SCORE: <span id="score">0</span></div>
+            <div class="hud-item">TIME: <span id="timer">60</span></div>
+        </div>
+
+        <!-- Start Screen -->
+        <div id="start-screen" class="overlay active">
+            <h1 class="glitch-text" data-text="AI PROTOCOL: PURGE">AI PROTOCOL: PURGE</h1>
+            <p>Target: Developers. Mission: Optimize codebase by elimination.</p>
+            <button id="start-btn" class="neon-btn">INITIALIZE</button>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="game-over-screen" class="overlay">
+            <h1>SIMULATION COMPLETE</h1>
+            <p>Devs Eliminated: <span id="final-score">0</span></p>
+            <button id="restart-btn" class="neon-btn">RE-RUN PROTOCOL</button>
+        </div>
+    </div>
+
+    <!-- Audio (Optional, pre-loading simple beeps if needed later) -->
+
+    <script src="game.js"></script>
+</body>
+
+</html>
