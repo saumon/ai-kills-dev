@@ -3,51 +3,93 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <meta name="theme-color" content="#0a0618">
+    <meta name="description" content="AI Protocol: PURGE — a neon 3D rail shooter where an AI optimizes the codebase by eliminating developers.">
     <title>AI Kills Devs</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="stylesheet" href="style.css">
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "./vendor/three/build/three.module.min.js",
+                "three/addons/": "./vendor/three/addons/"
+            }
+        }
+    </script>
 </head>
 
 <body>
+    <canvas id="scene"></canvas>
 
-    <div id="game-container">
-        <!-- Crosshair/Gun follows mouse -->
-        <div id="cursor-gun"></div>
-        <div id="crosshair"></div>
+    <div id="hurt"></div>
+    <div id="float-layer"></div>
+    <div id="crosshair"><i></i></div>
+    <div id="banner"></div>
 
-        <!-- Game World -->
-        <div id="world">
-            <!-- Developers will assume positions here -->
+    <div id="hud">
+        <div class="hud-block hud-score">
+            <span class="hud-label">SCORE</span>
+            <span id="score" class="hud-value">0</span>
         </div>
 
-        <!-- HUD -->
-        <div id="hud">
-            <div class="hud-item">SCORE: <span id="score">0</span></div>
-            <div class="hud-item">TIME: <span id="timer">60</span></div>
+        <div class="hud-block hud-timer">
+            <span id="timer" class="hud-value">60</span>
+            <div class="timer-track"><div id="timer-bar"></div></div>
         </div>
 
-        <!-- Start Screen -->
-        <div id="start-screen" class="overlay active">
-            <h1 class="glitch-text" data-text="AI PROTOCOL: PURGE">AI PROTOCOL: PURGE</h1>
-            <p>Target: Developers. Mission: Optimize codebase by elimination.</p>
-            <button id="start-btn" class="neon-btn">INITIALIZE</button>
+        <div class="hud-block hud-right">
+            <span class="hud-label">SPRINT <span id="sprint">1</span></span>
+            <div class="hud-buttons">
+                <button id="pause-btn" class="chip" type="button" aria-label="Pause">PAUSE</button>
+            </div>
         </div>
 
-        <!-- Game Over Screen -->
-        <div id="game-over-screen" class="overlay">
-            <h1>SIMULATION COMPLETE</h1>
-            <p>Devs Eliminated: <span id="final-score">0</span></p>
-            <button id="restart-btn" class="neon-btn">RE-RUN PROTOCOL</button>
+        <div id="combo">
+            <span id="combo-mult">x1</span>
+            <span id="combo-pips" data-n="0"><i></i><i></i><i></i></span>
+            <span class="hud-label">COMBO</span>
         </div>
     </div>
 
-    <!-- Audio (Optional, pre-loading simple beeps if needed later) -->
+    <section id="start-screen" class="overlay active">
+        <h1 class="glitch" data-text="AI PROTOCOL: PURGE">AI PROTOCOL: PURGE</h1>
+        <p class="tagline">Target: developers. Mission: optimize the codebase by elimination.</p>
+        <ul class="briefing">
+            <li><b>AIM &amp; FIRE</b> Move the mouse and click — or tap the screen.</li>
+            <li><b>COMBO</b> Chain kills without missing. Headshots score double.</li>
+            <li><b class="gold">10x DEV</b> Golden devs are worth 50 and give +3 seconds.</li>
+            <li><b class="bad">BUGS</b> Shoot the red bugs they throw, or lose 5 seconds.</li>
+        </ul>
+        <button id="start-btn" class="neon-btn" type="button">INITIALIZE</button>
+        <p class="meta">BEST <span id="best-score">0</span> · <button id="mute-btn" class="link" type="button" aria-pressed="false">SOUND ON</button></p>
+    </section>
 
-    <script src="game.js"></script>
+    <section id="pause-screen" class="overlay">
+        <h1>PROCESS SUSPENDED</h1>
+        <button id="resume-btn" class="neon-btn" type="button">RESUME</button>
+        <button id="quit-btn" class="link" type="button">ABORT RUN</button>
+    </section>
+
+    <section id="over-screen" class="overlay">
+        <h1 class="glitch" data-text="SIMULATION COMPLETE">SIMULATION COMPLETE</h1>
+        <p id="final-rank" class="rank">AUTOCOMPLETE PLUGIN</p>
+        <dl class="stats">
+            <div class="wide"><dt>SCORE</dt><dd id="final-score">0</dd></div>
+            <div><dt>DEVS PURGED</dt><dd id="final-kills">0</dd></div>
+            <div><dt>ACCURACY</dt><dd id="final-acc">0%</dd></div>
+            <div><dt>BEST COMBO</dt><dd id="final-combo">0</dd></div>
+            <div><dt>HIGH SCORE</dt><dd id="final-best">0</dd></div>
+        </dl>
+        <button id="restart-btn" class="neon-btn" type="button">RE-RUN PROTOCOL</button>
+    </section>
+
+    <p id="no-webgl" hidden>This game needs WebGL. Try a recent browser with hardware acceleration enabled.</p>
+
+    <script type="module" src="src/main.js"></script>
 </body>
 
 </html>
